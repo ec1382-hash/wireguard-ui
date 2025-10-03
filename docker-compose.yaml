@@ -13,7 +13,7 @@ services:
       - EMAIL_FROM_ADDRESS
       - EMAIL_FROM_NAME
       - SESSION_SECRET
-      - WGUI_USERNAME=alpha
+      - WGUI_USERNAME=admin
       - WGUI_PASSWORD=this-unusual-password
       - WG_CONF_TEMPLATE
       - WGUI_MANAGE_START=false
@@ -25,3 +25,16 @@ services:
     volumes:
       - ./db:/app/db
       - /etc/wireguard:/etc/wireguard
+    ports:
+      - 3000
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.<unique-name>.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.<unique-name>.entrypoints=websecure"
+      - "traefik.http.routers.<unique-name>.tls.certResolver=letsencrypt"
+      - "traefik.http.services.<unique-name>.loadbalancer.server.port=3000"
+networks:
+  dokploy-network:
+    external: true
