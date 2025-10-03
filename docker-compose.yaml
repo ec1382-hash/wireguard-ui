@@ -1,7 +1,7 @@
 version: "3"
 
 services:
-  wg:
+  wg-ui:
     build: .
     #image: ngoduykhanh/wireguard-ui:latest
     container_name: wgui
@@ -14,7 +14,7 @@ services:
       - EMAIL_FROM_NAME
       - SESSION_SECRET
       - WGUI_USERNAME=admin
-      - WGUI_PASSWORD=this-unusual-password
+      - WGUI_PASSWORD=this-password
       - WG_CONF_TEMPLATE
       - WGUI_MANAGE_START=false
       - WGUI_MANAGE_RESTART=false
@@ -28,13 +28,13 @@ services:
     ports:
       - 3000
     networks:
-      - dokploy-network
+      - wg-ui-network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.<unique-name>.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.<unique-name>.rule=Host(`inet.server4.vip`)"
       - "traefik.http.routers.<unique-name>.entrypoints=websecure"
       - "traefik.http.routers.<unique-name>.tls.certResolver=letsencrypt"
-      - "traefik.http.services.<unique-name>.loadbalancer.server.port=3000"
+      - "traefik.http.services.<unique-name>.loadbalancer.server.port=9999"
 networks:
-  dokploy-network:
+  wg-ui-network:
     external: true
