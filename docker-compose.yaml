@@ -28,13 +28,13 @@ services:
     ports:
       - 3000
     networks:
-      - wg-ui-network
+      - dokploy-network
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.<unique-name>.rule=Host(`inet.server4.vip`)"
+      - "traefik.http.routers.<unique-name>.rule=Host(`my.server.loc`)"
       - "traefik.http.routers.<unique-name>.entrypoints=websecure"
       - "traefik.http.routers.<unique-name>.tls.certResolver=letsencrypt"
       - "traefik.http.services.<unique-name>.loadbalancer.server.port=9999"
 networks:
-  wg-ui-network:
+  dokploy-network:
     external: true
