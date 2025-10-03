@@ -7,7 +7,6 @@ services:
     container_name: wgui
     cap_add:
       - NET_ADMIN
-    network_mode: host
     environment:
       - SENDGRID_API_KEY
       - EMAIL_FROM_ADDRESS
