@@ -5,6 +5,7 @@ services:
     build: .
     #image: ngoduykhanh/wireguard-ui:latest
     container_name: wgui
+    network_mode: host
     cap_add:
       - NET_ADMIN
     environment:
@@ -24,16 +25,9 @@ services:
     volumes:
       - ./db:/app/db
       - /etc/wireguard:/etc/wireguard
-    ports:
-      - 3000
-    networks:
-      - dokploy-network
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.<unique-name>.rule=Host(`inet.server4.vip`)"
       - "traefik.http.routers.<unique-name>.entrypoints=websecure"
       - "traefik.http.routers.<unique-name>.tls.certResolver=letsencrypt"
-      - "traefik.http.services.<unique-name>.loadbalancer.server.port=9999"
-networks:
-  dokploy-network:
-    external: true
+      - "traefik.http.services.<unique-name>.loadbalancer.server.port=5000"
