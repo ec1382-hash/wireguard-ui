@@ -39,7 +39,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.wireguard-ui.rule=Host(`inet.server4.vip`)"
+      - "traefik.http.routers.wireguard-ui.rule=Host(`my.vpn.server`)"
       - "traefik.http.routers.wireguard-ui.entrypoints=websecure"
       - "traefik.http.routers.wireguard-ui.tls.certResolver=letsencrypt"
       - "traefik.http.services.wireguard-ui.loadbalancer.server.port=5000"
